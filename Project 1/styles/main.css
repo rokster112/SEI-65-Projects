@@ -1,0 +1,74 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  background: aquamarine;
+}
+
+.grid-wrapper {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.grid div {
+  border: 1px solid lightgrey;
+  flex-grow: 1;
+  height: 12.5%;
+  width: 11.11%;
+}
+
+.grid div.frog {
+  background-image: url('../assets/pepe\ the\ frog.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.car1 {
+  background-image: url('../assets/car\ right.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.car2 {
+  background-image: url('../assets/car\ left.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.fly {
+  background-image: url('../assets/fly.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.grid div.leaf1 {
+  background-image: url('../assets/lotus\ leaf.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.grid div.leaf2 {
+  background-image: url('../assets/lotus\ left\ leaf.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+

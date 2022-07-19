@@ -4,7 +4,6 @@ function init() {
   const grid = document.querySelector('.grid')
 
 
-
   //! Variables
   const width = 9
   const height = 8
@@ -12,14 +11,19 @@ function init() {
   const cells = []
 
   //! Car movement
+  // const carRight = [62, 61, 60, 59, 58, 57, 56, 55, 54]
+  const carRowIndex = 6
+  const carGap = 3
+  const carStartIndex = width * carRowIndex 
+  const cars = Array.from(cells).slice(carStartIndex, carGap + width)
   
 
 
   //! Characters
   const startingPosition = 67
   let currentPosition = startingPosition
-  const carRight = [62, 61, 60, 59, 58, 57, 56, 55, 54]
-  console.log(carRight)
+  
+  
   const frog = 'frog'
   const car1 = 'car1'
   const car2 = 'car2'
@@ -49,37 +53,39 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell) 
     }
+
     addFrog(startingPosition)
+
     //! 1st row of cars
     addCar1(61)
     addCar1(59)
     addCar1(57)
     addCar1(55)
-
+    
     //! 2nd row of cars
     addCar2(37)
     addCar2(39)
     addCar2(41)
     addCar2(43)
-
+  
     //! 3rd row, leafs1
     addLeaf1(26)
     addLeaf1(24)
     addLeaf1(22)
     addLeaf1(20)
-
+  
     //! 4th row, leafs2
     addLeaf2(9)
     addLeaf2(11)
     addLeaf2(13)
     addLeaf2(15)
-
+  
     //! 5th row, flies
     addFly(1)
     addFly(3)
     addFly(5)
     addFly(7)
-    
+
   }
 
   //! Character functions
@@ -117,11 +123,14 @@ function init() {
   }
 
   function startGame() {
-
+    // clearInterval(timer)
+    // removeFrog()
+    // score = 0
+    // lives = 3
+    // scoreDisplay.innerHTML = score
+    // livesDisplay.innerHTML = lives
     
-
     timer = setInterval(() => {
-      
       
     }, 1000)
 
@@ -153,12 +162,16 @@ function init() {
     addFrog(currentPosition)
   }
 
+  
 
 
 
 
+  startButton.addEventListener('click', startGame)
+  // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
   createGrid()
+
 
 }
 

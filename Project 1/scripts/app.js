@@ -9,13 +9,32 @@ function init() {
   const height = 8
   const cellCount = width * height
   const cells = []
+  let counter = 0
 
   //! Car movement
-  // const carRight = [62, 61, 60, 59, 58, 57, 56, 55, 54]
-  const carRowIndex = 6
-  const carGap = 3
-  const carStartIndex = width * carRowIndex 
-  const cars = Array.from(cells).slice(carStartIndex, carGap + width)
+  // car1
+  const carRowIndexLeft = 6
+  const carGapLeft = 2
+  const carStartIndexLeft = width * carRowIndexLeft 
+  let carsLeft = []
+  
+  // car2
+  const carRowIndexRight = 4
+  const carGapRight = 2
+  const carStartIndexRight = width * carRowIndexRight
+  let carsRight = []
+
+  // leaf1
+  const leafRowIndexLeft = 2
+  const leafGapLeft = 3
+  const leafStartIndexLeft = width * leafRowIndexLeft
+  let leafsLeft = []
+
+  // leaf2
+  const leafRowIndexRight = 1
+  const leafGapRight = 2
+  const leafStartIndexRight = width * leafRowIndexRight
+  let leafsRight = []
   
 
 
@@ -53,32 +72,24 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell) 
     }
+    carsLeft = Array.from(cells).slice(carStartIndexLeft, carStartIndexLeft + width)
+    carsRight = Array.from(cells).slice(carStartIndexRight, carStartIndexRight + width)
+    leafsLeft = Array.from(cells).slice(leafStartIndexLeft, leafStartIndexLeft + width)
+    leafsRight = Array.from(cells).slice(leafStartIndexRight, leafStartIndexRight + width)
 
     addFrog(startingPosition)
 
     //! 1st row of cars
-    addCar1(61)
-    addCar1(59)
-    addCar1(57)
-    addCar1(55)
+    
     
     //! 2nd row of cars
-    addCar2(37)
-    addCar2(39)
-    addCar2(41)
-    addCar2(43)
+    
   
     //! 3rd row, leafs1
-    addLeaf1(26)
-    addLeaf1(24)
-    addLeaf1(22)
-    addLeaf1(20)
+    
   
     //! 4th row, leafs2
-    addLeaf2(9)
-    addLeaf2(11)
-    addLeaf2(13)
-    addLeaf2(15)
+
   
     //! 5th row, flies
     addFly(1)
@@ -97,22 +108,6 @@ function init() {
   function removeFrog(position) {
     cells[position].classList.remove(frog)
   }
-  
-  function addCar1(position) {
-    cells[position].classList.add(car1)
-  }
-
-  function addCar2(position) {
-    cells[position].classList.add(car2)
-  }
-
-  function addLeaf1(position) {
-    cells[position].classList.add(leaf1)
-  }
-
-  function addLeaf2(position) {
-    cells[position].classList.add(leaf2)
-  }
 
   function addFly(position) {
     cells[position].classList.add(fly)
@@ -123,16 +118,49 @@ function init() {
   }
 
   function startGame() {
-    // clearInterval(timer)
-    // removeFrog()
-    // score = 0
-    // lives = 3
-    // scoreDisplay.innerHTML = score
-    // livesDisplay.innerHTML = lives
-    
+    // if (lives === 0) {
+    //   currentPosition = startingPosition
+    //   removeFrog()
+    //   clearInterval(timer)
+    //   score = 0
+    //   lives = 3
+    //   scoreDisplay.innerHTML = score
+    //   livesDisplay.innerHTML = lives
+    // }
     timer = setInterval(() => {
+      counter++
+      cells.forEach(cell => cell.classList.remove('car1', 'car2', 'leaf1', 'leaf2'))
+
+      carsLeft.forEach((car, i) => {
+        if (i % carGapLeft === carGapLeft - 1 - counter % carGapLeft){
+          car.classList.add('car1')
+          
+        } 
+      })
       
-    }, 1000)
+      carsRight.forEach((car, i) => {
+        if (i % carGapRight !== carGapRight - 1 - counter % carGapRight){
+          car.classList.add('car2')
+          
+        } 
+      })
+
+      leafsLeft.forEach((leaf, i) => {
+        if (i % leafGapLeft === leafGapLeft - 1 - counter % leafGapLeft)
+          leaf.classList.add('leaf1')
+
+      })
+
+      leafsRight.forEach((leaf, i) => {
+        if (i % leafGapRight !== leafGapRight - 1 - counter % leafGapRight)
+          leaf.classList.add('leaf2')
+
+      })
+
+
+    }, 500)
+
+    
 
   }
 
@@ -160,8 +188,38 @@ function init() {
     }
 
     addFrog(currentPosition)
+
+    if (cells[currentPosition].classList.contains('car1') || cells[currentPosition].classList.contains('car2')){
+      lives -=
+      livesDisplay.innerHTML = lives
+      currentPosition = startingPosition
+    } 
+
+    if (cells[currentPosition].classList.contains('fly')){
+      flies +=
+      fliesDisplay.innerHTML = flies
+      removeFly()
+    }
   }
 
+  function endGame () {
+  
+    if (lives === 0) {
+      console.log('Lost!')
+      frog.classList.remove('frog')
+      clearInterval(timer)
+      score = 0
+      lives = 3
+      flies = 0
+      scoreDisplay.innerHTML = score
+      livesDisplay.innerHTML = lives
+      fliesDisplay.innerHTML = flies
+      setTimeout(() => {
+        window.alert(score)
+      }, 50)
+    }
+  }
+  
   
 
 
@@ -171,6 +229,7 @@ function init() {
   // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
   createGrid()
+  endGame()
 
 
 }

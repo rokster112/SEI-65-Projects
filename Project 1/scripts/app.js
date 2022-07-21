@@ -13,28 +13,33 @@ function init() {
 
   //! Car movement
   // car1
-  const carRowIndexLeft = 6
-  const carGapLeft = 2
-  const carStartIndexLeft = width * carRowIndexLeft 
-  let carsLeft = []
+  const carRowIndexLeft1 = 6
+  const carGapLeft1 = 3
+  const carStartIndexLeft1 = width * carRowIndexLeft1
+  let carsLeft1 = []
   
   // car2
-  const carRowIndexRight = 4
-  const carGapRight = 2
-  const carStartIndexRight = width * carRowIndexRight
-  let carsRight = []
+  const carRowIndexRight1 = 4
+  const carGapRight1 = 2
+  const carStartIndexRight1 = width * carRowIndexRight1
+  let carsRight1 = []
 
-  // leaf1
-  const leafRowIndexLeft = 2
-  const leafGapLeft = 3
-  const leafStartIndexLeft = width * leafRowIndexLeft
-  let leafsLeft = []
+  // car3
+  const carRowIndexLeft2 = 2
+  const carGapLeft2 = 3
+  const carStartIndexLeft2 = width * carRowIndexLeft2
+  let carsLeft2 = []
 
-  // leaf2
-  const leafRowIndexRight = 1
-  const leafGapRight = 2
-  const leafStartIndexRight = width * leafRowIndexRight
-  let leafsRight = []
+  // car4
+  const carRowIndexRight2 = 1
+  const carGapRight2 = 2
+  const carStartIndexRight2 = width * carRowIndexRight2
+  let carsRight2 = []
+
+  const flyIndex1 = 1
+  const flyIndex3 = 3
+  const flyIndex5 = 5
+  const flyIndex7 = 7
   
 
 
@@ -46,10 +51,9 @@ function init() {
   const frog = 'frog'
   const car1 = 'car1'
   const car2 = 'car2'
+  const car3 = 'car3'
+  const car4 = 'car4'
   const fly = 'fly'
-  const leaf1 = 'leaf1'
-  const leaf2 = 'leaf2'
-
   //! Other
   const startButton = document.querySelector('button')
   const scoreDisplay = document.querySelector('#score')
@@ -72,12 +76,14 @@ function init() {
       cells.push(cell)
       grid.appendChild(cell) 
     }
-    carsLeft = Array.from(cells).slice(carStartIndexLeft, carStartIndexLeft + width)
-    carsRight = Array.from(cells).slice(carStartIndexRight, carStartIndexRight + width)
-    leafsLeft = Array.from(cells).slice(leafStartIndexLeft, leafStartIndexLeft + width)
-    leafsRight = Array.from(cells).slice(leafStartIndexRight, leafStartIndexRight + width)
-
+    
+    carsLeft1 = Array.from(cells).slice(carStartIndexLeft1, carStartIndexLeft1 + width)
+    carsRight1 = Array.from(cells).slice(carStartIndexRight1, carStartIndexRight1 + width)
+    carsLeft2 = Array.from(cells).slice(carStartIndexLeft2, carStartIndexLeft2 + width)
+    carsRight2 = Array.from(cells).slice(carStartIndexRight2, carStartIndexRight2 + width)
     addFrog(startingPosition)
+
+    
 
     //! 1st row of cars
     
@@ -92,10 +98,7 @@ function init() {
 
   
     //! 5th row, flies
-    addFly(1)
-    addFly(3)
-    addFly(5)
-    addFly(7)
+    
 
   }
 
@@ -117,6 +120,17 @@ function init() {
     cells[position].classList.remove(fly)
   }
 
+  function endGame() {
+    clearInterval(timer)
+    removeFrog(currentPosition)
+    lives = 3
+    score = 0
+    livesDisplay.innerHTML = lives
+    addFrog(startingPosition)
+    setTimeout(() => alert(`Your score is ${score}`), 50)
+  }
+
+  // Starting the game
   function startGame() {
     // if (lives === 0) {
     //   currentPosition = startingPosition
@@ -127,42 +141,86 @@ function init() {
     //   scoreDisplay.innerHTML = score
     //   livesDisplay.innerHTML = lives
     // }
+
+    createGrid()
     timer = setInterval(() => {
       counter++
-      cells.forEach(cell => cell.classList.remove('car1', 'car2', 'leaf1', 'leaf2'))
+      cells.forEach(cell => cell.classList.remove('car1', 'car2', 'car3', 'car4'))
 
-      carsLeft.forEach((car, i) => {
-        if (i % carGapLeft === carGapLeft - 1 - counter % carGapLeft){
+      carsLeft1.forEach((car, i) => {
+        if (i % carGapLeft1 === carGapLeft1 - 1 - counter % carGapLeft1){
           car.classList.add('car1')
-          
+          // i is the index of the car, width is * by carRowIndex and then added to the car index which will then be the same index of the frogs current position 
+          if (i + width * carRowIndexLeft1 === currentPosition) {
+            removeFrog(currentPosition)
+            lives = lives - 1
+            livesDisplay.innerHTML = lives
+            
+            addFrog(startingPosition)
+            
+          } 
         } 
       })
       
-      carsRight.forEach((car, i) => {
-        if (i % carGapRight !== carGapRight - 1 - counter % carGapRight){
+      carsRight1.forEach((car, i) => {
+        if (i % carGapRight1 === carGapRight1 - 1 - counter % carGapRight1){
           car.classList.add('car2')
-          
+          if (i + width * carRowIndexRight1 === currentPosition) {
+            removeFrog(currentPosition)
+            
+            lives = lives - 1
+            livesDisplay.innerHTML = lives
+            addFrog(startingPosition)
+          } 
         } 
       })
 
-      leafsLeft.forEach((leaf, i) => {
-        if (i % leafGapLeft === leafGapLeft - 1 - counter % leafGapLeft)
-          leaf.classList.add('leaf1')
-
+      carsLeft2.forEach((car, i) => {
+        if (i % carGapLeft2 === carGapLeft2 - 1 - counter % carGapLeft2) {
+          car.classList.add('car3')
+          if (i + width * carRowIndexLeft2 === currentPosition) {
+            removeFrog(currentPosition)
+            
+            lives = lives - 1
+            livesDisplay.innerHTML = lives
+            addFrog(startingPosition)
+          }
+        }
       })
 
-      leafsRight.forEach((leaf, i) => {
-        if (i % leafGapRight !== leafGapRight - 1 - counter % leafGapRight)
-          leaf.classList.add('leaf2')
-
+      carsRight2.forEach((car, i) => {
+        if (i % carGapRight2 !== carGapRight2 - 1 - counter % carGapRight2){
+          car.classList.add('car4')
+          if (i + width * carRowIndexRight2 === currentPosition) {
+            removeFrog(currentPosition)
+            
+            lives = lives - 1
+            livesDisplay.innerHTML = lives
+            addFrog(startingPosition)
+          }
+        }
       })
+
+      if (lives === 0){
+        endGame()
+      }
 
 
     }, 500)
 
+    addFly(flyIndex1)
+    addFly(flyIndex3)
+    addFly(flyIndex5)
+    addFly(flyIndex7)
     
+    if (currentPosition === flyIndex1) {
+      removeFly(flyIndex1)
+      score = score + 100
+      scoreDisplay.innerHTML = score
+    }
 
   }
+
 
   function playerMovement(e) {
     const keyCode = e.keyCode
@@ -189,35 +247,42 @@ function init() {
 
     addFrog(currentPosition)
 
-    if (cells[currentPosition].classList.contains('car1') || cells[currentPosition].classList.contains('car2')){
-      lives -=
+    if (cells[currentPosition].classList.contains('car1')){
+      console.log('I have been hit')
+      removeFrog(startingPosition)
+      
+      lives = lives - 1
       livesDisplay.innerHTML = lives
-      currentPosition = startingPosition
+      addFrog(startingPosition)
     } 
 
-    if (cells[currentPosition].classList.contains('fly')){
-      flies +=
-      fliesDisplay.innerHTML = flies
-      removeFly()
-    }
-  }
-
-  function endGame () {
-  
-    if (lives === 0) {
-      console.log('Lost!')
-      frog.classList.remove('frog')
-      clearInterval(timer)
-      score = 0
-      lives = 3
-      flies = 0
-      scoreDisplay.innerHTML = score
+    if (cells[currentPosition].classList.contains('car2')){
+      removeFrog(startingPosition)
+      
+      lives = lives - 1
       livesDisplay.innerHTML = lives
-      fliesDisplay.innerHTML = flies
-      setTimeout(() => {
-        window.alert(score)
-      }, 50)
+      addFrog(startingPosition)
     }
+
+    if (cells[currentPosition].classList.contains('car3')){
+      console.log('I have been hit')
+      removeFrog(startingPosition)
+      
+      lives = lives - 1
+      livesDisplay.innerHTML = lives
+      addFrog(startingPosition)
+    } 
+
+    if (cells[currentPosition].classList.contains('car4')){
+      removeFrog(startingPosition)
+      
+      lives = lives - 1
+      livesDisplay.innerHTML = lives
+      addFrog(startingPosition)
+    }
+
+    
+
   }
   
   
@@ -228,8 +293,8 @@ function init() {
   startButton.addEventListener('click', startGame)
   // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
-  createGrid()
-  endGame()
+  
+  
 
 
 }

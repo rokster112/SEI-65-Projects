@@ -35,14 +35,7 @@ function init() {
   const carGapRight2 = 2
   const carStartIndexRight2 = width * carRowIndexRight2
   let carsRight2 = []
-
-  const flyIndex1 = 1
-  const flyIndex3 = 3
-  const flyIndex5 = 5
-  const flyIndex7 = 7
   
-
-
   //! Characters
   const startingPosition = 67
   let currentPosition = startingPosition
@@ -53,18 +46,59 @@ function init() {
   const car2 = 'car2'
   const car3 = 'car3'
   const car4 = 'car4'
-  const fly = 'fly'
+  const fly1 = 'fly1'
+  const fly2 = 'fly2'
+  const fly3 = 'fly3'
+  const fly4 = 'fly4'
+  
   //! Other
   const startButton = document.querySelector('button')
   const scoreDisplay = document.querySelector('#score')
   const fliesDisplay = document.querySelector('#fliesEaten')
   const livesDisplay = document.querySelector('#livesRemaining')
+  const rulesDisplay = document.querySelector('.rules')
+
+  //! Music
+  const gameOver = document.querySelector('#gameOver')
+  const win = document.querySelector('#win')
+  const hitDamage = document.querySelector('#gettingHit')
+  const touchingFly = document.querySelector('#touchingFly')
+  const startingGame = document.querySelector('#startGame')
 
   let score = 0
   let flies = 0
   let lives = 3
   let timer
+  // let rules
 
+  function gameOverTheme() {
+    gameOver.play()
+  }
+
+  function winTheme() {
+    win.play()
+  }
+
+  function hitDamageTheme() {
+    hitDamage.play()
+  }
+
+  function touchingFlyTheme() {
+    touchingFly.play()
+  }
+
+  function startingGameTheme() {
+    startingGame.play()
+  }
+
+
+  // function addRules(position) {
+  //   cells[position].classList.add('rules')
+  // }
+
+  // function removeRules(position) {
+  //   cells[position].classList.remove('rules')
+  // }
   
   
   //!Creating a grid function
@@ -81,24 +115,11 @@ function init() {
     carsRight1 = Array.from(cells).slice(carStartIndexRight1, carStartIndexRight1 + width)
     carsLeft2 = Array.from(cells).slice(carStartIndexLeft2, carStartIndexLeft2 + width)
     carsRight2 = Array.from(cells).slice(carStartIndexRight2, carStartIndexRight2 + width)
-    addFrog(startingPosition)
+    
+    // addRules()
 
-    
-
-    //! 1st row of cars
-    
-    
-    //! 2nd row of cars
-    
-  
-    //! 3rd row, leafs1
-    
-  
-    //! 4th row, leafs2
-
-  
-    //! 5th row, flies
-    
+    // rules = 'this is frogger game, rules are eat flies, avoid cars.'
+    // rulesDisplay.innerHTML = rules
 
   }
 
@@ -112,37 +133,90 @@ function init() {
     cells[position].classList.remove(frog)
   }
 
-  function addFly(position) {
-    cells[position].classList.add(fly)
+  //Adding flies
+  function addFly1(position) {
+    cells[position].classList.add(fly1)
   }
 
-  function removeFly(position) {
-    cells[position].classList.remove(fly)
+  function addFly2(position) {
+    cells[position].classList.add(fly2)
   }
+
+  function addFly3(position) {
+    cells[position].classList.add(fly3)
+  }
+
+  function addFly4(position) {
+    cells[position].classList.add(fly4)
+  }
+  //End of adding flies
+
+  //Removing flies
+  function removeFly1(position) {
+    cells[position].classList.remove(fly1)
+  }
+
+  function removeFly2(position) {
+    cells[position].classList.remove(fly2)
+  }
+
+  function removeFly3(position) {
+    cells[position].classList.remove(fly3)
+  }
+
+  function removeFly4(position) {
+    cells[position].classList.remove(fly4)
+  }
+  //End of removing flies
 
   function endGame() {
     clearInterval(timer)
     removeFrog(currentPosition)
-    lives = 3
-    score = 0
-    livesDisplay.innerHTML = lives
+    currentPosition = startingPosition
     addFrog(startingPosition)
-    setTimeout(() => alert(`Your score is ${score}`), 50)
+    if (lives <= 0) {
+      gameOverTheme()
+      setTimeout(() => alert(`You lose!! Your score is ${score}`), 30)
+    } else if (flies === 4) {
+      winTheme()
+      setTimeout(() => alert(`You win!! Your score is ${score}`), 30)
+    }
+  }
+
+  function gettingHit() {
+    hitDamageTheme()
+    removeFrog(currentPosition)
+    currentPosition = startingPosition
+    addFrog(startingPosition)
+    lives = lives - 1
+    livesDisplay.innerHTML = lives
+  }
+
+  function eatingFly() {
+    touchingFlyTheme()
+    score = score + 100
+    scoreDisplay.innerHTML = score
+    flies = flies + 1
+    fliesDisplay.innerHTML = flies
   }
 
   // Starting the game
   function startGame() {
-    // if (lives === 0) {
-    //   currentPosition = startingPosition
-    //   removeFrog()
-    //   clearInterval(timer)
-    //   score = 0
-    //   lives = 3
-    //   scoreDisplay.innerHTML = score
-    //   livesDisplay.innerHTML = lives
-    // }
+    startingGameTheme()
+    addFrog(startingPosition)
+    lives = 3
+    score = 0
+    flies = 0
+    livesDisplay.innerHTML = lives
+    scoreDisplay.innerHTML = score
+    fliesDisplay.innerHTML = flies
+    endGame()
 
-    createGrid()
+    addFly1(1)
+    addFly2(3)
+    addFly3(5)
+    addFly4(7)
+
     timer = setInterval(() => {
       counter++
       cells.forEach(cell => cell.classList.remove('car1', 'car2', 'car3', 'car4'))
@@ -152,12 +226,7 @@ function init() {
           car.classList.add('car1')
           // i is the index of the car, width is * by carRowIndex and then added to the car index which will then be the same index of the frogs current position 
           if (i + width * carRowIndexLeft1 === currentPosition) {
-            removeFrog(currentPosition)
-            lives = lives - 1
-            livesDisplay.innerHTML = lives
-            
-            addFrog(startingPosition)
-            
+            gettingHit()
           } 
         } 
       })
@@ -166,11 +235,7 @@ function init() {
         if (i % carGapRight1 === carGapRight1 - 1 - counter % carGapRight1){
           car.classList.add('car2')
           if (i + width * carRowIndexRight1 === currentPosition) {
-            removeFrog(currentPosition)
-            
-            lives = lives - 1
-            livesDisplay.innerHTML = lives
-            addFrog(startingPosition)
+            gettingHit()
           } 
         } 
       })
@@ -179,11 +244,7 @@ function init() {
         if (i % carGapLeft2 === carGapLeft2 - 1 - counter % carGapLeft2) {
           car.classList.add('car3')
           if (i + width * carRowIndexLeft2 === currentPosition) {
-            removeFrog(currentPosition)
-            
-            lives = lives - 1
-            livesDisplay.innerHTML = lives
-            addFrog(startingPosition)
+            gettingHit()
           }
         }
       })
@@ -192,35 +253,19 @@ function init() {
         if (i % carGapRight2 !== carGapRight2 - 1 - counter % carGapRight2){
           car.classList.add('car4')
           if (i + width * carRowIndexRight2 === currentPosition) {
-            removeFrog(currentPosition)
-            
-            lives = lives - 1
-            livesDisplay.innerHTML = lives
-            addFrog(startingPosition)
+            gettingHit()
           }
         }
       })
 
-      if (lives === 0){
+      if (lives <= 0){
+        endGame()
+      } else if (flies === 4) {
         endGame()
       }
 
-
     }, 500)
-
-    addFly(flyIndex1)
-    addFly(flyIndex3)
-    addFly(flyIndex5)
-    addFly(flyIndex7)
-    
-    if (currentPosition === flyIndex1) {
-      removeFly(flyIndex1)
-      score = score + 100
-      scoreDisplay.innerHTML = score
-    }
-
   }
-
 
   function playerMovement(e) {
     const keyCode = e.keyCode
@@ -232,71 +277,71 @@ function init() {
     removeFrog(currentPosition)
 
     if (up === keyCode && currentPosition >= width) {
-      console.log('clicked up')
       currentPosition -= width
     } else if (down === keyCode && currentPosition + width <= cellCount - 1) {
-      console.log('clicked down')
       currentPosition += width
     } else if (left === keyCode && currentPosition % width !== 0) {
-      console.log('clicked left')
       currentPosition -= 1
     } else if (right === keyCode && currentPosition % width !== width - 1) {
-      console.log('clicked right')
       currentPosition += 1
     }
 
     addFrog(currentPosition)
 
     if (cells[currentPosition].classList.contains('car1')){
-      console.log('I have been hit')
-      removeFrog(startingPosition)
-      
-      lives = lives - 1
-      livesDisplay.innerHTML = lives
-      addFrog(startingPosition)
+      gettingHit()
     } 
 
     if (cells[currentPosition].classList.contains('car2')){
-      removeFrog(startingPosition)
-      
-      lives = lives - 1
-      livesDisplay.innerHTML = lives
-      addFrog(startingPosition)
+      gettingHit()
     }
 
     if (cells[currentPosition].classList.contains('car3')){
-      console.log('I have been hit')
-      removeFrog(startingPosition)
-      
-      lives = lives - 1
-      livesDisplay.innerHTML = lives
-      addFrog(startingPosition)
+      gettingHit()
     } 
 
     if (cells[currentPosition].classList.contains('car4')){
-      removeFrog(startingPosition)
-      
-      lives = lives - 1
-      livesDisplay.innerHTML = lives
-      addFrog(startingPosition)
+      gettingHit()
     }
 
+    if (cells[currentPosition].classList.contains('fly1')) {
+      eatingFly()
+      removeFly1(1)
+      removeFrog(currentPosition)
+      currentPosition = startingPosition
+      addFrog(startingPosition)
+    } 
     
-
+    if (cells[currentPosition].classList.contains('fly2')) {
+      eatingFly()
+      removeFly2(3)
+      removeFrog(currentPosition)
+      currentPosition = startingPosition
+      addFrog(startingPosition)
+    } 
+    
+    if (cells[currentPosition].classList.contains('fly3')) {
+      eatingFly()
+      removeFly3(5)
+      removeFrog(currentPosition)
+      currentPosition = startingPosition
+      addFrog(startingPosition)
+    } 
+    
+    if (cells[currentPosition].classList.contains('fly4')) {
+      eatingFly()
+      removeFly4(7)
+      removeFrog(currentPosition)
+      currentPosition = startingPosition
+      addFrog(startingPosition)
+    }
   }
   
-  
-
-
-
 
   startButton.addEventListener('click', startGame)
   // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
-  
-  
-
-
+  createGrid()
 }
 
 document.addEventListener('DOMContentLoaded', init)

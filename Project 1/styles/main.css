@@ -91,6 +91,10 @@ button {
   
 }
 
+#rules {
+  text-align: center;
+}
+
 .grid div.car1 {
   background-image: url('../assets/car\ Left\ png.png');
   background-repeat: no-repeat;
@@ -107,12 +111,34 @@ button {
   
 }
 
-.grid div.fly {
+.grid div.fly1 {
   background-image: url('../assets/Fly-PNG-Transparent-Picture.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
+
+.grid div.fly2 {
+  background-image: url('../assets/Fly-PNG-Transparent-Picture.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.grid div.fly3 {
+  background-image: url('../assets/Fly-PNG-Transparent-Picture.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.grid div.fly4 {
+  background-image: url('../assets/Fly-PNG-Transparent-Picture.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 .grid div.car3 {
   background-image: url('../assets/truck\ left.png');
   background-repeat: no-repeat;

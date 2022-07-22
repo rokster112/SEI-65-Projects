@@ -58,8 +58,16 @@ function init() {
   const livesDisplay = document.querySelector('#livesRemaining')
   
   //! Pop up screen
-  const showRules = document.querySelector('.show-screen. .rules')
-  const hideRules = document.querySelector('.show-screen .grid')
+  const rulesDisplay = document.querySelector('.show-screen.rules')
+  const hideRules = document.querySelector('.show-screen.grid')
+  const hideGrid = document.querySelector('show-screen.grid')
+  const showGrid = document.querySelector('.grid')
+
+  const rules = 'asdhas dhasjlkdh ajdh asjlkdh aslkjdhalskjd'
+
+  rulesDisplay.innerHTML = rules
+
+  
 
 
   
@@ -77,8 +85,7 @@ function init() {
   let timer
   
   function showRules1(position) {
-    cells[position].classList.add('show-screen rules')
-    
+    cells[position].classList.add(showRules)
   }
 
   function gameOverTheme() {
@@ -116,12 +123,13 @@ function init() {
   
   
   //!Creating a grid function
+
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
       cell.dataset.index = i
       cells.push(cell)
-      grid.appendChild(cell) 
+      grid.appendChild(cell)
     }
     
     carsLeft1 = Array.from(cells).slice(carStartIndexLeft1, carStartIndexLeft1 + width)
@@ -131,14 +139,8 @@ function init() {
     // addRules()
     
     
-  }
-
-
-
-  // function addRules(position) {
-  //   cells[position].classList.add(rulesDisplay.innerHTML)
     
-  // }
+  }
 
   //! Character functions
   
@@ -221,7 +223,7 @@ function init() {
 
   // Starting the game
   function startGame() {
-    startingGameTheme()
+    // startingGameTheme()
     addFrog(startingPosition)
     lives = 3
     score = 0
@@ -357,11 +359,12 @@ function init() {
     }
   }
   
-
+  startButton.addEventListener('click', createGrid)
   startButton.addEventListener('click', startGame)
   // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
-  createGrid()
+  
+  
   
 }
 

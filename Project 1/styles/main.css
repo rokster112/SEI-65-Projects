@@ -28,13 +28,10 @@ header {
   text-align: center;
 }
 
-.rules {
+/* .rules {
   display: none;
-}
+} */
 
-.show-screen .grid {
-  display: none;
-}
 
 .grid {
   align-items: center;
@@ -43,7 +40,10 @@ header {
   height: 100%;
   justify-content: center;
   width: 100%;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2)
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+  background-image: url("../assets/frogger\ background.jpeg");
+  background-repeat: no-repeat;
+  background-position: top;
 }
 
 .grid div {

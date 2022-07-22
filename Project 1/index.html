@@ -17,10 +17,12 @@
       <div class="lives">
         <p>Lives: <span id="livesRemaining">3</span></p>
       </div>
-      <div class="start"><button>Start Game!</button></div>
     </header>
+    <div class="popUp active">
+      <h3 class="show-screen rules">RULES OF THE GAME!<br>Avoid getting hit by cars<br>Eat the flies<br>Once four flies are collected, you win the game<br>If you get hit three times, you lose the game</h3>
+      <div class="start"><button>Start Game!</button></div>
+    </div>
     <div class="grid-wrapper">
-      <p class="show-screen rules"></p>
       <audio id="gameOver">
         <source src="../Project 1/sounds/gameover.wav">
       </audio>
@@ -36,7 +38,7 @@
       <audio id="startGame" loop>
         <source src="../Project 1/sounds/soundtrack.mp3">
       </audio>
-      <div class="show-screen grid"></div>
+      <div class="grid"></div>
     </div>
   </body>
 </html>

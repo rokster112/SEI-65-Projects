@@ -23,15 +23,33 @@ header {
   align-items: center;
 }
 
-.show-screen .rules {
-  display: block;
+h3 {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-style: italic;
 }
 
-/* .rules {
-  display: none;
-} */
-
+.popUp {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 350ms;
+  opacity: 0;
+  pointer-events: none;
+  background-image: url("../assets/1280px-Frogger-logo.svg.png");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: contain;
+  background-color: green;
+}
+.popUp.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 .grid {
   align-items: center;
@@ -41,9 +59,6 @@ header {
   justify-content: center;
   width: 100%;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-  background-image: url("../assets/frogger\ background.jpeg");
-  background-repeat: no-repeat;
-  background-position: top;
 }
 
 .grid div {
@@ -59,6 +74,8 @@ button {
   padding: 8px 30px;
   background-color: floralwhite;
   color: crimson;
+  left: 650px;
+  position: relative;
 }
 
 .grid div:nth-child(-n+9) {
@@ -102,10 +119,6 @@ button {
   background-size: contain;
   background-position: center;
   
-}
-
-#rules {
-  text-align: center;
 }
 
 .grid div.car1 {

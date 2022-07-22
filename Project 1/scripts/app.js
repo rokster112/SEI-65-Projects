@@ -2,6 +2,7 @@ function init() {
 
   //! Elements
   const grid = document.querySelector('.grid')
+  const popUps = document.querySelectorAll('.popUp')
 
 
   //! Variables
@@ -56,21 +57,6 @@ function init() {
   const scoreDisplay = document.querySelector('#score')
   const fliesDisplay = document.querySelector('#fliesEaten')
   const livesDisplay = document.querySelector('#livesRemaining')
-  
-  //! Pop up screen
-  const rulesDisplay = document.querySelector('.show-screen.rules')
-  const hideRules = document.querySelector('.show-screen.grid')
-  const hideGrid = document.querySelector('show-screen.grid')
-  const showGrid = document.querySelector('.grid')
-
-  const rules = 'asdhas dhasjlkdh ajdh asjlkdh aslkjdhalskjd'
-
-  rulesDisplay.innerHTML = rules
-
-  
-
-
-  
 
   //! Music
   const gameOver = document.querySelector('#gameOver')
@@ -83,10 +69,6 @@ function init() {
   let flies = 0
   let lives = 3
   let timer
-  
-  function showRules1(position) {
-    cells[position].classList.add(showRules)
-  }
 
   function gameOverTheme() {
     gameOver.play()
@@ -112,16 +94,6 @@ function init() {
     startingGame.pause()
   }
 
-
-  // function addRules(position) {
-  //   cells[position].classList.add('rules')
-  // }
-
-  // function removeRules(position) {
-  //   cells[position].classList.remove('rules')
-  // }
-  
-  
   //!Creating a grid function
 
   function createGrid() {
@@ -136,10 +108,6 @@ function init() {
     carsRight1 = Array.from(cells).slice(carStartIndexRight1, carStartIndexRight1 + width)
     carsLeft2 = Array.from(cells).slice(carStartIndexLeft2, carStartIndexLeft2 + width)
     carsRight2 = Array.from(cells).slice(carStartIndexRight2, carStartIndexRight2 + width)
-    // addRules()
-    
-    
-    
   }
 
   //! Character functions
@@ -152,7 +120,6 @@ function init() {
     cells[position].classList.remove(frog)
   }
 
-  //Adding flies
   function addFly1(position) {
     cells[position].classList.add(fly1)
   }
@@ -168,9 +135,7 @@ function init() {
   function addFly4(position) {
     cells[position].classList.add(fly4)
   }
-  //End of adding flies
 
-  //Removing flies
   function removeFly1(position) {
     cells[position].classList.remove(fly1)
   }
@@ -186,7 +151,6 @@ function init() {
   function removeFly4(position) {
     cells[position].classList.remove(fly4)
   }
-  //End of removing flies
 
   function endGame() {
     clearInterval(timer)
@@ -197,10 +161,12 @@ function init() {
       pauseTheme()
       gameOverTheme()
       setTimeout(() => alert(`You lose!! Your score is ${score}`), 30)
+      popUps.forEach(popUp => popUp.classList.add('active'))
     } else if (flies === 4) {
       pauseTheme()
       winTheme()
       setTimeout(() => alert(`You win!! Your score is ${score}`), 30)
+      popUps.forEach(popUp => popUp.classList.add('active'))
     }
   }
 
@@ -223,7 +189,8 @@ function init() {
 
   // Starting the game
   function startGame() {
-    // startingGameTheme()
+    startingGameTheme()
+    popUps.forEach(popUp => popUp.classList.remove('active'))
     addFrog(startingPosition)
     lives = 3
     score = 0
@@ -237,7 +204,6 @@ function init() {
     addFly2(3)
     addFly3(5)
     addFly4(7)
-    // removeRules()
 
     timer = setInterval(() => {
       counter++
@@ -361,11 +327,7 @@ function init() {
   
   startButton.addEventListener('click', createGrid)
   startButton.addEventListener('click', startGame)
-  // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
-  
-  
-  
 }
 
 document.addEventListener('DOMContentLoaded', init)

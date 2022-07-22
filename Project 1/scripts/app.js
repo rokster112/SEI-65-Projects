@@ -56,7 +56,13 @@ function init() {
   const scoreDisplay = document.querySelector('#score')
   const fliesDisplay = document.querySelector('#fliesEaten')
   const livesDisplay = document.querySelector('#livesRemaining')
-  const rulesDisplay = document.querySelector('.rules')
+  
+  //! Pop up screen
+  const showRules = document.querySelector('.show-screen. .rules')
+  const hideRules = document.querySelector('.show-screen .grid')
+
+
+  
 
   //! Music
   const gameOver = document.querySelector('#gameOver')
@@ -69,7 +75,11 @@ function init() {
   let flies = 0
   let lives = 3
   let timer
-  // let rules
+  
+  function showRules1(position) {
+    cells[position].classList.add('show-screen rules')
+    
+  }
 
   function gameOverTheme() {
     gameOver.play()
@@ -91,6 +101,10 @@ function init() {
     startingGame.play()
   }
 
+  function pauseTheme() {
+    startingGame.pause()
+  }
+
 
   // function addRules(position) {
   //   cells[position].classList.add('rules')
@@ -105,7 +119,6 @@ function init() {
   function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      cell.innerText = i
       cell.dataset.index = i
       cells.push(cell)
       grid.appendChild(cell) 
@@ -115,13 +128,17 @@ function init() {
     carsRight1 = Array.from(cells).slice(carStartIndexRight1, carStartIndexRight1 + width)
     carsLeft2 = Array.from(cells).slice(carStartIndexLeft2, carStartIndexLeft2 + width)
     carsRight2 = Array.from(cells).slice(carStartIndexRight2, carStartIndexRight2 + width)
-    
     // addRules()
-
-    // rules = 'this is frogger game, rules are eat flies, avoid cars.'
-    // rulesDisplay.innerHTML = rules
-
+    
+    
   }
+
+
+
+  // function addRules(position) {
+  //   cells[position].classList.add(rulesDisplay.innerHTML)
+    
+  // }
 
   //! Character functions
   
@@ -175,9 +192,11 @@ function init() {
     currentPosition = startingPosition
     addFrog(startingPosition)
     if (lives <= 0) {
+      pauseTheme()
       gameOverTheme()
       setTimeout(() => alert(`You lose!! Your score is ${score}`), 30)
     } else if (flies === 4) {
+      pauseTheme()
       winTheme()
       setTimeout(() => alert(`You win!! Your score is ${score}`), 30)
     }
@@ -216,6 +235,7 @@ function init() {
     addFly2(3)
     addFly3(5)
     addFly4(7)
+    // removeRules()
 
     timer = setInterval(() => {
       counter++
@@ -342,6 +362,7 @@ function init() {
   // cars.forEach(car => car.addEventListener('click', startGame))
   document.addEventListener('keyup', playerMovement)
   createGrid()
+  
 }
 
 document.addEventListener('DOMContentLoaded', init)

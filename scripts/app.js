@@ -105,9 +105,9 @@ function init() {
     }
     
     carsLeft1 = Array.from(cells).slice(carStartIndexLeft1, carStartIndexLeft1 + width)
-    carsRight1 = Array.from(cells).slice(carStartIndexRight1, carStartIndexRight1 + width)
+    carsRight1 = Array.from(cells).slice(width * carStartIndexRight1, width * (carStartIndexRight1 + 1))
     carsLeft2 = Array.from(cells).slice(carStartIndexLeft2, carStartIndexLeft2 + width)
-    carsRight2 = Array.from(cells).slice(carStartIndexRight2, carStartIndexRight2 + width)
+    carsRight2 = Array.from(cells).slice(width * carStartIndexRight2, width * (carStartIndexRight2 + 1))
   }
 
   //! Character functions
@@ -220,7 +220,7 @@ function init() {
       })
       
       carsRight1.forEach((car, i) => {
-        if (i % carGapRight1 === carGapRight1 - 1 - counter % carGapRight1){
+        if (i % carGapRight1 === counter % carGapRight1){
           car.classList.add('car2')
           if (i + width * carRowIndexRight1 === currentPosition) {
             gettingHit()
@@ -238,7 +238,7 @@ function init() {
       })
 
       carsRight2.forEach((car, i) => {
-        if (i % carGapRight2 !== carGapRight2 - 1 - counter % carGapRight2){
+        if (i % carGapRight2 === counter % carGapRight2){
           car.classList.add('car4')
           if (i + width * carRowIndexRight2 === currentPosition) {
             gettingHit()

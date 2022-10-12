@@ -2,7 +2,7 @@
 
 Frogger is a game based on the original Frogger game which was developed by Konami on the 12th January 1981. In this game, you must cross through traffic and avoid cars, in order to reach and eat a fly at the end. When you eat a fly, you return to the starting position. Once all four flies have been eaten, you win the game.
 
-[Frogger](https://rokster112.github.io/SEI-65-Projects/ "Frogger")
+Frogger
 
 ### **Overview**
 I had to build a grid-based game in one week, by using HTML, CSS, and JavaScript. My game is based on avoiding collisions with car objects and eating fly objects. Controls of the game are arrow buttons. It was a solo project.
